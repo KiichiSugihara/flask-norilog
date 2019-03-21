@@ -47,8 +47,10 @@ def load_data():
 def index():
     """トップページ
     テンプレートを使用してページを表示します
+    記録データを読み込みます
     """
-    return render_template('index.html')
+    rides =load_data()
+    return render_template('index.html',rides=rides)
 
 if __name__ == '__main__':
     # IPアドレス0.0.0.0 の8000番ポートでアプリケーションを実行
