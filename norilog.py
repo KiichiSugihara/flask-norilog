@@ -1,5 +1,9 @@
 import json
 
+from flask import Flask, render_template
+
+application = Flask(__name__)
+
 DATA_FILE = 'norilog.json'
 
 # 記録データを jsonに保存する
@@ -38,3 +42,14 @@ def load_data():
     except FileNotFoundError:
         database = []
     return database
+
+@application.route('/')
+def index():
+    """トップページ
+    テンプレートを使用してページを表示します
+    """
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    # IPアドレス0.0.0.0 の8000番ポートでアプリケーションを実行
+    application.run('0.0.0.0',8000,debug=True)
