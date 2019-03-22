@@ -1,11 +1,18 @@
 import json
 
 from datetime import datetime
-from flask import Flask,request, render_template,redirect
+from flask import Flask,request, render_template,redirect, Markup,escape
 
 application = Flask(__name__)
 
 DATA_FILE = 'norilog.json'
+
+
+@application.template_filter('nl2br')
+def nl2br_filter(s):
+    """改行文字を br タグ 置き換える テンプレート フィルター"""
+    return escape(s).replace('\n', Markup('<br>'))
+
 
 # 記録データを jsonに保存する
 def save_data(start, finish, memo, create_at):
