@@ -1,6 +1,7 @@
 import json
+
 from datetime import datetime
-from flask import Flask, render_template,redirect
+from flask import Flask,request, render_template,redirect
 
 application = Flask(__name__)
 
@@ -20,7 +21,7 @@ def save_data(start, finish, memo, create_at):
     :return: None
     """
     try:
-        # json モジュール　でデータベースファイルを開きます
+        # json モジュール　でデータ ベースファイルを開きます
         database = json.load(open(DATA_FILE, mode="r", encoding="utf-8"))
     except FileNotFoundError:
         database = []
@@ -47,7 +48,7 @@ def save():
 def load_data():
     """記録データを返します"""
     try:
-        # json モジュールでデータベースファイルを開きます
+        # json モジュールで データ ベースファイルを開きます
         database = json.load(open(DATA_FILE, mode="r", encoding="utf-8"))
     except FileNotFoundError:
         database = []
@@ -56,12 +57,12 @@ def load_data():
 @application.route('/')
 def index():
     """トップページ
-    テンプレートを使用してページを表示します
+    テンプレート を使用してページを表示します
     記録データを読み込みます
     """
     rides =load_data()
     return render_template('index.html',rides=rides)
 
 if __name__ == '__main__':
-    # IPアドレス0.0.0.0 の8000番ポートでアプリケーションを実行
+    # IPアドレス0.0.0.0 の8000番ポートで アプリケーションを実行
     application.run('0.0.0.0',8000,debug=True)

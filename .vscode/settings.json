@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
-    "でデータ"
+    "strftime",
+    "でデータ",
+    "データベ"
   ],
   "python.formatting.provider": "black"
 }
