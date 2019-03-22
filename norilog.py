@@ -1,13 +1,13 @@
 import json
-
-from flask import Flask, render_template
+from datetime import datetime
+from flask import Flask, render_template,redirect
 
 application = Flask(__name__)
 
 DATA_FILE = 'norilog.json'
 
 # 記録データを jsonに保存する
-def save_data(start, finish, memo, created_at):
+def save_data(start, finish, memo, create_at):
     """記録データを保存します
     :param start: 乗った駅
     :type start: str
@@ -15,8 +15,8 @@ def save_data(start, finish, memo, created_at):
     :type finish: str
     :param memo: 乗り降りのメモ
     :type memo: str
-    :param created_at: 乗り降りの日付
-    :type created_at: datetime.datetime
+    :param create_at: 乗り降りの日付
+    :type create_at: datetime.datetime
     :return: None
     """
     try:
@@ -29,10 +29,20 @@ def save_data(start, finish, memo, created_at):
         "start": start,
         "finish": finish,
         "memo": memo,
-        "created_at": created_at.strftime("%Y-%m-%d %H:%M")
+        "create_at": create_at.strftime("%Y-%m-%d %H:%M")
     })
 
     json.dump(database, open(DATA_FILE, mode="w", encoding="utf-8"), indent=4, ensure_ascii=False)
+
+@application.route('/save', methods=['POST'])
+def save():
+    """記録用"""
+    start = request.form.get('start')
+    finish = request.form.get('finish')
+    memo = request.form.get('memo')
+    create_at = datetime.now()
+    save_data(start, finish, memo, create_at)
+    return redirect('/')
 
 def load_data():
     """記録データを返します"""
