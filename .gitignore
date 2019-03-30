@@ -3,12 +3,14 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+dist
+flask_norilog.egg-info
 
 # mac
 .DS_Store
 
 #environment
-venv
+3.6venv
 
 # User-specific files
 *.suo
